@@ -1,0 +1,29 @@
+security:
+    password_hashers:
+        App\Entity\User:
+            algorithm: auto
+            
+    firewalls:
+        public:
+            pattern: ^/(css|js|images|favicon.ico)
+            security: false
+
+        main:
+            pattern: ^/
+            json_login:
+                check_path: /login
+                username_path: _username
+                password_path: _password
+            logout:
+                path: app_logout
+
+            security: true
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
